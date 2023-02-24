@@ -3,6 +3,8 @@ import { useStaticQuery, graphql } from "gatsby";
 import Layout from "../components/layout";
 import Seo from "../components/seo";
 import Headings from "../components/headings";
+import Menus from "../components/menus";
+import MenuTitle from "../components/menuTitle"
 
 const IndexPage = () => {
   const { strapiGlobal, allStrapiMenu } = useStaticQuery(graphql`
@@ -20,6 +22,7 @@ const IndexPage = () => {
             email
             mobile
             telephone
+            facebook
           }
         }
         openingHours {
@@ -53,23 +56,13 @@ const IndexPage = () => {
       <main>
         {/* The Specials menu */}
         <div className="container grid justify-center ">
-          <h4 className="mt-[5rem] text-center text-3xl font-bold text-neutral-700">
-            {strapiGlobal.specialDateRange}
-            <p className="mb-2 text-xl text-neutral-500">
-              {strapiGlobal.specialTimeRange}
-            </p>
-          </h4>
+          <MenuTitle main={strapiGlobal.specialDateRange} sub={strapiGlobal.specialTimeRange} />
 
           {allStrapiMenu.nodes.map((item, index) => {
             return (
               <>
                 {item.isSpecial && (
-                  <div className=" m-2 grid grid-cols-8 py-2 tracking-widest hover:font-medium ">
-                    <p className="col-span-7 w-[500px] max-sm:w-[220px]">
-                      {item.title}
-                    </p>
-                    <p className="col-span-1 text-end">{item.cost} </p>
-                  </div>
+                  <Menus title={item.title} cost={item.cost} />
                 )}
               </>
             );
@@ -78,23 +71,13 @@ const IndexPage = () => {
 
         {/* The usual menu */}
         <div className="mx-4 grid justify-center">
-          <h4 className="mt-[5rem] text-center text-3xl font-bold text-neutral-700">
-            {strapiGlobal.festKarteTitle}
-            <p className="mb-2 text-xl text-neutral-500 ">
-              {strapiGlobal.festKarteSubTitle}
-            </p>
-          </h4>
+          <MenuTitle main={strapiGlobal.festKarteTitle} sub={strapiGlobal.festKarteSubTitle} />
 
           {allStrapiMenu.nodes.map((item, index) => {
             return (
               <>
                 {!item.isSpecial && (
-                  <div className=" m-2 grid grid-cols-8 py-2 tracking-widest hover:font-medium ">
-                    <p className="col-span-7 w-[500px] max-sm:w-[220px]">
-                      {item.title}
-                    </p>
-                    <p className="col-span-1 text-end">{item.cost} </p>
-                  </div>
+                  <Menus title={item.title} cost={item.cost} />
                 )}
               </>
             );

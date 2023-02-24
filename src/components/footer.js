@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from 'gatsby'
 import { BsTelephoneFill } from "react-icons/bs";
-import { FaMobileAlt, FaEnvelope } from "react-icons/fa";
+import { FaMobileAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
 
 const Footer = ({ hours, contact }) => {
   const currentYear = new Date().getFullYear();
@@ -16,7 +17,6 @@ const Footer = ({ hours, contact }) => {
           <div className="mb-6">
             <h5 className="mb-2 font-medium uppercase ">Opening Hours</h5>
             <div
-              className="hover:scale-110"
               key={`openHrs`}
               id="___gatsby"
               dangerouslySetInnerHTML={{
@@ -60,6 +60,17 @@ const Footer = ({ hours, contact }) => {
                   </a>
                 </li>
               )}
+              {contact.contact.facebook && (
+                <li className="mx-2 ">
+                  <a
+                    href={`https://www.facebook.com/${contact.contact.facebook}`}
+                    target="_blank"
+                    rel="nofollow noreferrer noopener"
+                  >
+                    <FaFacebook className="hover:scale-150 hover:fill-primary-200" />
+                  </a>
+                </li>
+              )}
             </ul>
 
             <p className="mb-4" />
@@ -79,7 +90,7 @@ const Footer = ({ hours, contact }) => {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="bg-neutral-200 p-4 text-center text-neutral-700 dark:bg-neutral-700 dark:text-neutral-200">
         © {currentYear} |
         <a
@@ -89,9 +100,36 @@ const Footer = ({ hours, contact }) => {
           {" "}
           hammer3
         </a>
-        <a className="px-4 text-neutral-600" href={adminLink}>
+        <a className="ml-32 text-neutral-600" href={adminLink}>
           Admin
         </a>
+        <Link
+          className="mx-4 text-neutral-600  " to="/menu">
+          Menu Preview
+        </Link>
+      </div> */}
+
+      <div className="p-4 grid grid-cols-3 text-center text-neutral-200 bg-neutral-700 ">
+        <div className="flex justify-center">
+        </div>
+        <div className="flex justify-center">
+          © {currentYear} |
+          <a
+            className="text-neutral-800 dark:text-neutral-400 ml-1"
+            href="https://hammer3.de/"
+          >
+            hammer3
+          </a>
+        </div>
+        <div className="flex justify-end px-4">
+          <a className="ml-32 text-neutral-600" href={adminLink}>
+            Admin
+          </a>
+          <Link
+            className="mx-4 text-neutral-600  " to="/menu">
+            Menu Preview
+          </Link>
+        </div>
       </div>
     </footer>
   );

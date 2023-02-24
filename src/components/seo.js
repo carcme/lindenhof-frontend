@@ -2,11 +2,12 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import { useStaticQuery, graphql } from "gatsby";
 
-const Seo = ({ title = {} }) => {
+const Seo = ({ title: pageName = {} }) => {
   const { strapiGlobal, site } = useStaticQuery(graphql`
     query {
       strapiGlobal {
         siteName
+        siteDescription
         favicon {
           localFile {
             url
@@ -15,99 +16,55 @@ const Seo = ({ title = {} }) => {
       }
       site {
         siteMetadata {
-          author
-          description
-          developerName
-          developerUrl
-          facebookUsername
-          image
-          keywords
-          language
-          siteName
-          siteUrl
           title
+          description
+          image
+          siteKeywords
+          twitterUsername
+          language
+          siteUrl
         }
       }
     }
   `);
 
-  const { siteName, favicon } = strapiGlobal;
+  const {
+    siteName: siteTitle,
+    siteDescription: siteDesc,
+    favicon,
+  } = strapiGlobal;
 
-  // // Add site name to title
-  // fullSeo.metaTitle = `${fullSeo.metaTitle} | ${siteName}`;
-
-  // const getMetaTags = () => {
-  //   const tags = [];
-
-  //   if (fullSeo.metaTitle) {
-  //     tags.push(
-  //       {
-  //         property: "og:title",
-  //         content: fullSeo.metaTitle,
-  //       },
-  //       {
-  //         name: "twitter:title",
-  //         content: fullSeo.metaTitle,
-  //       }
-  //     );
-  //   }
-  //   if (fullSeo.metaDescription) {
-  //     tags.push(
-  //       {
-  //         name: "description",
-  //         content: fullSeo.metaDescription,
-  //       },
-  //       {
-  //         property: "og:description",
-  //         content: fullSeo.metaDescription,
-  //       },
-  //       {
-  //         name: "twitter:description",
-  //         content: fullSeo.metaDescription,
-  //       }
-  //     );
-  //   }
-  //   if (fullSeo.shareImage) {
-  //     const imageUrl = fullSeo.shareImage.localFile.url;
-  //     tags.push(
-  //       {
-  //         name: "image",
-  //         content: imageUrl,
-  //       },
-  //       {
-  //         property: "og:image",
-  //         content: imageUrl,
-  //       },
-  //       {
-  //         name: "twitter:image",
-  //         content: imageUrl,
-  //       }
-  //     );
-  //   }
-  //   if (fullSeo.article) {
-  //     tags.push({
-  //       property: "og:type",
-  //       content: "article",
-  //     });
-  //   }
-  //   tags.push({ name: "twitter:card", content: "summary_large_image" });
-
-  //   return tags;
-  // };
-
-  // const metaTags = getMetaTags();
+  const { siteKeywords, siteUrl, image, twitterUsername, language } =
+    site.siteMetadata;
 
   return (
     <Helmet
-      title={`${title} | ${siteName}`}
+      title={`${pageName} | ${siteTitle}`}
       link={[
         {
           rel: "icon",
           href: favicon.localFile.url,
         },
       ]}
-      // meta={metaTags}
-    />
+    >
+      <meta name="description" content={siteDesc} />
+      <meta name="image" content={image} />
+      {/* Facebook Card */}
+      <meta property="og:url" content={siteUrl} />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content={siteTitle} />
+      <meta property="og:description" content={siteDesc} />
+      <meta property="og:image" content={`${siteUrl}${image}`} />
+      <meta property="og:keywords" content={siteKeywords || ``} />
+      <meta property="og:image:width" content="400" />
+      <meta property="og:image:height" content="300" />
+      {/* Twitter Card */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:creator" content={twitterUsername} />
+      <meta name="twitter:title" content={siteTitle} />
+      <meta name="twitter:description" content={siteDesc} />
+      <meta name="twitter:image" content={`${siteUrl}${image}`} />
+    </Helmet>
   );
 };
 

@@ -13,7 +13,8 @@ module.exports = {
         trailingComma: "es5",
         semi: false,
         tabWidth: 2,
+        endOfLine: "off",
       },
     ],
   },
-}
+};
