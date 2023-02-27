@@ -3,13 +3,14 @@ import { Link } from 'gatsby'
 import { BsTelephoneFill } from "react-icons/bs";
 import { FaMobileAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
 
-const Footer = ({ hours, contact }) => {
+
+const Footer = ({ hours, contact = [] }) => {
   const currentYear = new Date().getFullYear();
-  const openHrs = hours.html.split("\n").join("</p><p>");
+  const openHrs = hours ? hours.html.split("\n").join("</p><p>") : "";
+  const showAdmin = localStorage.getItem('admin') ? true : false
+  const adminLink = "https://lindenhof-backend.up.railway.app/admin/content-manager/collectionType/api::menu.menu"
 
-  const adminLink =
-    "https://lindenhof-backend.up.railway.app/admin/content-manager/collectionType/api::menu.menu?page=1&pageSize=20&sort=title:ASC";
-
+  console.log(contact);
   return (
     <footer className="mt-16 bg-neutral-100 text-center dark:bg-neutral-600 lg:text-left">
       <div className="container p-6 text-neutral-800 dark:text-neutral-200">
@@ -23,14 +24,15 @@ const Footer = ({ hours, contact }) => {
                 __html: openHrs,
               }}
             />
-          </div>{" "}
+          </div>
+          {" "}
           <div className="mb-6 md:mb-0">
             <h5 className="mb-2 font-medium uppercase">Contact</h5>
 
             <p className="mb-6 ">{contact.address}</p>
 
             <ul className="flex max-md:justify-center">
-              {contact.contact.telephone && (
+              {contact?.contact?.telephone && (
                 <li className="mx-2 ">
                   <a
                     href={`tel:${contact.contact.telephone}`}
@@ -40,7 +42,7 @@ const Footer = ({ hours, contact }) => {
                   </a>
                 </li>
               )}
-              {contact.contact.mobile && (
+              {contact.contact?.mobile && (
                 <li className="mx-2 ">
                   <a
                     href={`tel:${contact.contact.mobile}`}
@@ -50,7 +52,7 @@ const Footer = ({ hours, contact }) => {
                   </a>
                 </li>
               )}
-              {contact.contact.email && (
+              {contact.contact?.email && (
                 <li className="mx-2 ">
                   <a
                     href={`mailto:${contact.contact.email}`}
@@ -60,7 +62,7 @@ const Footer = ({ hours, contact }) => {
                   </a>
                 </li>
               )}
-              {contact.contact.facebook && (
+              {contact.contact?.facebook && (
                 <li className="mx-2 ">
                   <a
                     href={`https://www.facebook.com/${contact.contact.facebook}`}
@@ -75,6 +77,7 @@ const Footer = ({ hours, contact }) => {
 
             <p className="mb-4" />
           </div>
+
           <div className="mx-4 mb-6 flex justify-center md:mb-0">
             <iframe
               width="100%"
@@ -109,9 +112,8 @@ const Footer = ({ hours, contact }) => {
         </Link>
       </div> */}
 
-      <div className="p-4 grid grid-cols-3 text-center text-neutral-200 bg-neutral-700 ">
-        <div className="flex justify-center">
-        </div>
+      <div className="p-4 flex justify-center text-center text-neutral-200 bg-neutral-700 ">
+
         <div className="flex justify-center">
           © {currentYear} |
           <a
@@ -121,15 +123,19 @@ const Footer = ({ hours, contact }) => {
             hammer3
           </a>
         </div>
-        <div className="flex justify-end px-4">
-          <a className="ml-32 text-neutral-600" href={adminLink}>
-            Admin
-          </a>
-          <Link
-            className="mx-4 text-neutral-600  " to="/menu">
-            Menu Preview
-          </Link>
-        </div>
+        {showAdmin &&
+          <div>
+            <div className="text-neutral-200 ml-1">
+              <a href={adminLink}>
+                | Admin
+              </a>
+              <Link
+                className="ml-1" to="/menu">
+                | Menu Preview
+              </Link>
+            </div>
+          </div>
+        }
       </div>
     </footer>
   );

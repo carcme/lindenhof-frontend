@@ -38,6 +38,7 @@ export default function IndexPage({ serverData }) {
 
     const hours = strapiGlobal.openingHours.data.childMarkdownRemark;
     const { specialDateRange, specialTimeRange, festKarteTitle, festKarteSubTitle } = serverData.global.data.attributes
+    // const adminLink = "https://lindenhof-backend.up.railway.app/admin/content-manager/collectionType/api::menu.menu"
     return (
         <Layout hours={hours} contact={strapiGlobal.contact}>
             <Seo title="Home" />
@@ -46,6 +47,11 @@ export default function IndexPage({ serverData }) {
                 description="This page updates on each load"
             />
             <main>
+
+                {/* <div className="container grid justify-center mt-[3rem] text-center text-3xl font-bold underline text-neutral-500 hover:text-neutral-700">
+                    <a href={adminLink}>Click here to access server</a>
+                </div> */}
+
                 {/* The Specials menu */}
                 <div className="container grid justify-center ">
                     <MenuTitle main={specialDateRange} sub={specialTimeRange} />
