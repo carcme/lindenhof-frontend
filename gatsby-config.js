@@ -3,6 +3,9 @@ require("dotenv").config({
 });
 
 module.exports = {
+  flags: {
+    DEV_SSR: false,
+  },
   siteMetadata: {
     title: `Lindenhof Pätz`,
     description: `Nur das beste Restaurant in Pätz`,

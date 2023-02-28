@@ -4,19 +4,16 @@ import { Link, navigate } from "gatsby"
 import Headings from "../components/headings";
 
 const dash = () => {
-    const [admin, setAdmin] = useState(localStorage.getItem('admin') ? true : false);
+    const [admin, setAdmin] = useState(false);
 
     const buttonClick = () => {
         setAdmin(true);
     }
 
     useEffect(() => {
-        if (admin === false) {
-            console.log("undefined");
-            return;
-        }
+        setAdmin(localStorage.getItem('admin') ? true : false)
+
         if (admin) {
-            console.log("RET FRONT PAGE");
             localStorage.setItem('admin', admin);
             navigate('/')
         }
@@ -25,8 +22,8 @@ const dash = () => {
     return (
         <Layout>
             <Headings
-                title="Set Admin Mode"
-                description="Click to display Admin setting on main page"
+                title="Administrator Mode"
+                description="Click to display Admin setting"
             />
             <div className="container mt-8">
                 <button class="bg-neutral-600 hover:bg-neutral-700 text-white font-bold py-2 px-4 rounded"

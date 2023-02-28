@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'gatsby'
 import { BsTelephoneFill } from "react-icons/bs";
 import { FaMobileAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
@@ -7,10 +7,17 @@ import { FaMobileAlt, FaEnvelope, FaFacebook } from "react-icons/fa";
 const Footer = ({ hours, contact = [] }) => {
   const currentYear = new Date().getFullYear();
   const openHrs = hours ? hours.html.split("\n").join("</p><p>") : "";
-  const showAdmin = localStorage.getItem('admin') ? true : false
   const adminLink = "https://lindenhof-backend.up.railway.app/admin/content-manager/collectionType/api::menu.menu"
 
-  console.log(contact);
+  const [admin, setAdmin] = useState(false)
+
+  useEffect(() => {
+    setAdmin(localStorage.getItem('admin'))
+    console.log(admin);
+  }, [])
+
+
+
   return (
     <footer className="mt-16 bg-neutral-100 text-center dark:bg-neutral-600 lg:text-left">
       <div className="container p-6 text-neutral-800 dark:text-neutral-200">
@@ -123,7 +130,7 @@ const Footer = ({ hours, contact = [] }) => {
             hammer3
           </a>
         </div>
-        {showAdmin &&
+        {admin &&
           <div>
             <div className="text-neutral-200 ml-1">
               <a href={adminLink}>

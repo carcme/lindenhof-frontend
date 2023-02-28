@@ -1,8 +1,14 @@
+import React, { useState, useEffect } from "react";
 import { Link } from "gatsby";
-import React from "react";
 
 const Navbar = () => {
-  const showAdmin = localStorage.getItem('admin') ? true : false
+
+  const [admin, setAdmin] = useState(false)
+
+  useEffect(() => {
+    setAdmin(localStorage.getItem('admin'))
+    console.log(admin);
+  }, [])
 
   return (
     <header className="bg-primary-200">
@@ -14,7 +20,7 @@ const Navbar = () => {
           <Link className="text-xl font-medium " to="/about">
             About
           </Link>
-          {showAdmin && <Link className="ml-2 text-sm  " to="/menu">
+          {admin && <Link className="ml-2 text-sm  " to="/menu">
             Menu Preview
           </Link>
           }
